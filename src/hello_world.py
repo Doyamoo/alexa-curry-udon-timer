@@ -17,9 +17,8 @@ logger.setLevel(logging.INFO)
 
 
 @sb.request_handler(can_handle_func=is_request_type("LaunchRequest"))
-def launch_request_handler(handler_input):
+def launch_request_handler(handler_input: HandlerInput) -> Response:
     """スキルを起動するハンドラーです。"""
-    # type: (HandlerInput) -> Response
     speech_text = "ようこそ、アレクサスキルキットへ。こんにちは、と言ってみてください。"
 
     return handler_input.response_builder.speak(speech_text).set_card(
@@ -28,9 +27,8 @@ def launch_request_handler(handler_input):
 
 
 @sb.request_handler(can_handle_func=is_intent_name("HelloWorldIntent"))
-def hello_world_intent_handler(handler_input):
+def hello_world_intent_handler(handler_input: HandlerInput) -> Response:
     """ハローワールドインテント用ハンドラー。"""
-    # type: (HandlerInput) -> Response
     speech_text = "デコレーターを使ったPythonの世界へようこそ。"
 
     return handler_input.response_builder.speak(speech_text).set_card(
@@ -39,9 +37,8 @@ def hello_world_intent_handler(handler_input):
 
 
 @sb.request_handler(can_handle_func=is_intent_name("AMAZON.HelpIntent"))
-def help_intent_handler(handler_input):
+def help_intent_handler(handler_input: HandlerInput) -> Response:
     """Helpインテントのハンドラー。"""
-    # type: (HandlerInput) -> Response
     speech_text = "こんにちは。と言ってみてください。"
 
     return handler_input.response_builder.speak(speech_text).ask(
@@ -53,9 +50,8 @@ def help_intent_handler(handler_input):
     can_handle_func=lambda handler_input:
         is_intent_name("AMAZON.CancelIntent")(handler_input) or
         is_intent_name("AMAZON.StopIntent")(handler_input))
-def cancel_and_stop_intent_handler(handler_input):
+def cancel_and_stop_intent_handler(handler_input: HandlerInput) -> Response:
     """CancelおよびStopインテントの単一ハンドラー。"""
-    # type: (HandlerInput) -> Response
     speech_text = "さようなら"
 
     return handler_input.response_builder.speak(speech_text).set_card(
@@ -63,12 +59,11 @@ def cancel_and_stop_intent_handler(handler_input):
 
 
 @sb.request_handler(can_handle_func=is_intent_name("AMAZON.FallbackIntent"))
-def fallback_handler(handler_input):
+def fallback_handler(handler_input: HandlerInput) -> Response:
     """
     このハンドラーは、サポートされていないロケールではトリガーされません。
     そのため、どのロケールでも安全にデプロイできます。
     """
-    # type: (HandlerInput) -> Response
     speech = (
         "ハローワールドスキルは、お手伝いできません。"
         "こんにちは。と言ってみてください。")
@@ -78,18 +73,16 @@ def fallback_handler(handler_input):
 
 
 @sb.request_handler(can_handle_func=is_request_type("SessionEndedRequest"))
-def session_ended_request_handler(handler_input):
+def session_ended_request_handler(handler_input: HandlerInput) -> Response:
     """セッション終了のハンドラー。"""
-    # type: (HandlerInput) -> Response
     return handler_input.response_builder.response
 
 
 @sb.exception_handler(can_handle_func=lambda i, e: True)
-def all_exception_handler(handler_input, exception):
+def all_exception_handler(handler_input: HandlerInput, exception: Exception) -> Response:
     """すべての例外ハンドラーを取得し、例外をログに記録して、
     カスタムメッセージで応答します。
     """
-    # type: (HandlerInput, Exception) -> Response
     logger.error(exception, exc_info=True)
 
     speech = "申し訳ありません。問題が発生しました。後でもう一度試してください。"
