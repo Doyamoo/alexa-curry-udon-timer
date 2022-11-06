@@ -17,7 +17,8 @@ cd $PROJECT_DIR/src
 zip -g ../lambda.zip lambda_function.py  # zip に Python スクリプトを追加
 
 # display zip file
+cd $PROJECT_DIR
 ls | grep *.zip
 
 # update lambda
-aws lambda update-function-code --function-name lambda-alexa-curry-udon-timer --zip-file fileb://lambda.zip --publish
+# aws lambda update-function-code --function-name lambda-alexa-curry-udon-timer --zip-file fileb://lambda.zip --publish
