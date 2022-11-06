@@ -1,8 +1,11 @@
-name: AWS Lambda Deploy 
+name: AWS Lambda Deploy
+
 on:
   push:
     branches:
+      - dev
       - main
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -27,10 +30,25 @@ jobs:
       - name: setup-python
         uses: actions/setup-python@v3
         with:
-          python-version: '3.x'
+          python-version: "3.x"
 
-      - name: lambda update
+      - name: install pipenv, awscli
         run: |
+          pip3 install pipenv
           pip3 install awscli
-          # cd lambda && zip -r package.zip ./*
+
+      - name: install packages
+        run: pipenv sync
+
+      - name: make lambda.zip
+        run: sh zip_lambda_function.sh
+
+      - name: lambda update (DEV)
+        if: contains(toJSON(github.ref), 'dev')
+        run: |
+          aws lambda update-function-code --function-name lambda-alexa-curry-udon-timer --zip-file fileb://lambda.zip
+
+      - name: lambda update (STG)
+        if: contains(toJSON(github.ref), 'main')
+        run: |
           aws lambda update-function-code --function-name lambda-alexa-curry-udon-timer --zip-file fileb://lambda.zip --publish
