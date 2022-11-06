@@ -81,19 +81,6 @@ def launch_request_handler(handler_input: HandlerInput) -> Response:
     )
 
 
-@sb.request_handler(can_handle_func=is_intent_name("HelloWorldIntent"))
-def hello_world_intent_handler(handler_input: HandlerInput) -> Response:
-    """カレーうどんのタイマーインテント用ハンドラー。"""
-    speech_text = "デコレーターを使ったPythonの世界へようこそ。"
-
-    return (
-        handler_input.response_builder.speak(speech_text)
-        .set_card(SimpleCard("カレーうどんのタイマー", speech_text))
-        .set_should_end_session(True)
-        .response
-    )
-
-
 @sb.request_handler(can_handle_func=is_intent_name("AMAZON.HelpIntent"))
 def help_intent_handler(handler_input: HandlerInput) -> Response:
     """Helpインテントのハンドラー。"""
