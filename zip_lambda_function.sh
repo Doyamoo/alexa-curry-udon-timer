@@ -20,4 +20,4 @@ zip -g ../lambda.zip lambda_function.py  # zip に Python スクリプトを追�
 ls | grep *.zip
 
 # update lambda
-aws lambda update-function-code --function-name lambda-alexa-curry-udon-timer --zip-file fileb://lambda.zip
+aws lambda update-function-code --function-name lambda-alexa-curry-udon-timer --zip-file fileb://lambda.zip --publish
