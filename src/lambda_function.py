@@ -83,12 +83,12 @@ def launch_request_handler(handler_input: HandlerInput) -> Response:
 
 @sb.request_handler(can_handle_func=is_intent_name("HelloWorldIntent"))
 def hello_world_intent_handler(handler_input: HandlerInput) -> Response:
-    """ハローワールドインテント用ハンドラー。"""
+    """カレーうどんのタイマーインテント用ハンドラー。"""
     speech_text = "デコレーターを使ったPythonの世界へようこそ。"
 
     return (
         handler_input.response_builder.speak(speech_text)
-        .set_card(SimpleCard("ハローワールド", speech_text))
+        .set_card(SimpleCard("カレーうどんのタイマー", speech_text))
         .set_should_end_session(True)
         .response
     )
@@ -102,7 +102,7 @@ def help_intent_handler(handler_input: HandlerInput) -> Response:
     return (
         handler_input.response_builder.speak(speech_text)
         .ask(speech_text)
-        .set_card(SimpleCard("ハローワールド", speech_text))
+        .set_card(SimpleCard("カレーうどんのタイマー", speech_text))
         .response
     )
 
@@ -119,7 +119,7 @@ def cancel_and_stop_intent_handler(handler_input: HandlerInput) -> Response:
 
     return (
         handler_input.response_builder.speak(speech_text)
-        .set_card(SimpleCard("ハローワールド", speech_text))
+        .set_card(SimpleCard("カレーうどんのタイマー", speech_text))
         .response
     )
 
@@ -130,7 +130,7 @@ def fallback_handler(handler_input: HandlerInput) -> Response:
     このハンドラーは、サポートされていないロケールではトリガーされません。
     そのため、どのロケールでも安全にデプロイできます。
     """
-    speech = "ハローワールドスキルは、お手伝いできません。" "こんにちは。と言ってみてください。"
+    speech = "カレーうどんのタイマースキルは、お手伝いできません。" "こんにちは。と言ってみてください。"
     reprompt = "こんにちは。と言ってみてください。"
     handler_input.response_builder.speak(speech).ask(reprompt)
     return handler_input.response_builder.response
