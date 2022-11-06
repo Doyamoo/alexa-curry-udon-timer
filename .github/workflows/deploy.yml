@@ -37,13 +37,23 @@ jobs:
           pip3 install pipenv
           pip3 install awscli
 
-      - name: install packages
+      - name: run pipenv sync
         run: |
           export PIPENV_VENV_IN_PROJECT=1                                      
           pipenv sync
 
       - name: make lambda.zip
-        run: sh zip_lambda_function.sh
+        run: |
+          PROJECT_DIR=$(pwd)
+          SITE_PACKAGES_DIR=$(pipenv --venv)/lib/python3.9/site-packages
+          echo "Project Location: $PROJECT_DIR"
+          echo "Library Location: $SITE_PACKAGES_DIR"
+          cd $SITE_PACKAGES_DIR
+          rm -rf __pycache__  
+          zip -r $PROJECT_DIR/lambda.zip *
+          cd $PROJECT_DIR/src
+          zip -g ../lambda.zip lambda_function.py
+          cd $PROJECT_DIR
 
       - name: lambda update (DEV)
         if: contains(toJSON(github.ref), 'dev')
