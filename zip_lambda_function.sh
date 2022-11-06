@@ -9,7 +9,7 @@ echo "Library Location: $SITE_PACKAGES_DIR"
 
 # to zip site-packages
 cd $SITE_PACKAGES_DIR
-rm -rf __pycache__  # your option 容量節約のため．
+rm -rf __pycache__  
 zip -r $PROJECT_DIR/lambda.zip *
 
 # add lambda-function script(.py)
@@ -18,3 +18,6 @@ zip -g ../lambda.zip lambda_function.py  # zip に Python スクリプトを追�
 
 # display zip file
 ls | grep *.zip
+
+# update lambda
+aws lambda update-function-code --function-name lambda-alexa-curry-udon-timer --zip-file fileb://lambda.zip

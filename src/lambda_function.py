@@ -1,5 +1,4 @@
 import logging
-from typing import Collection
 
 from ask_sdk.standard import StandardSkillBuilder
 from ask_sdk_core.handler_input import HandlerInput
