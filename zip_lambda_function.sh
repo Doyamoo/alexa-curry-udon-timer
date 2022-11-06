@@ -14,7 +14,7 @@ zip -r $PROJECT_DIR/lambda.zip *
 
 # add lambda-function script(.py)
 cd $PROJECT_DIR/src
-zip -g ../lambda.zip hello_world.py  # zip に Python スクリプトを追加
+zip -g ../lambda.zip lambda_function.py  # zip に Python スクリプトを追加
 
 # display zip file
 ls | grep *.zip
