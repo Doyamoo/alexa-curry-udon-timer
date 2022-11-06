@@ -38,7 +38,9 @@ jobs:
           pip3 install awscli
 
       - name: install packages
-        run: pipenv sync
+        run: |
+          export PIPENV_VENV_IN_PROJECT=1                                      
+          pipenv sync
 
       - name: make lambda.zip
         run: sh zip_lambda_function.sh
