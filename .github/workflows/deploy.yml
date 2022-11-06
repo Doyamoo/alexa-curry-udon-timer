@@ -33,4 +33,4 @@ jobs:
         run: |
           pip3 install awscli
           # cd lambda && zip -r package.zip ./*
-          aws lambda update-function-code --function-name lambda-alexa-curry-udon-timer --zip-file fileb://lambda.zip
+          aws lambda update-function-code --function-name lambda-alexa-curry-udon-timer --zip-file fileb://lambda.zip  --publish
