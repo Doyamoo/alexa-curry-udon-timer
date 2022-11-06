@@ -16,7 +16,10 @@ logger.setLevel(logging.INFO)
 def launch_request_handler(handler_input: HandlerInput) -> Response:
     """スキルを起動するハンドラー"""
 
-    permissions = handler_input.request_envelope.context.system.user.permissions
+    request_envelope = handler_input.request_envelope
+    service_client_factory = handler_input.service_client_factory
+
+    permissions = request_envelope.context.system.user.permissions  # type: ignore
     logger.info(permissions)
 
     if not (permissions and permissions.consent_token):
@@ -25,7 +28,6 @@ def launch_request_handler(handler_input: HandlerInput) -> Response:
     else:
         # タイマーをセットする
         logger.info("パーミッションあり")
-        logger.info(permissions.consent_token)
 
         timer1 = {
             "duration": "PT3M",
@@ -58,13 +60,11 @@ def launch_request_handler(handler_input: HandlerInput) -> Response:
         try:
             logger.info("タイマー作成開始")
 
-            timer_service_client = (
-                handler_input.service_client_factory.get_timer_management_service()
-            )
-            timer_response = timer_service_client.create_timer(timer1)
+            timer_service_client = service_client_factory.get_timer_management_service()
+            timer_response = timer_service_client.create_timer(timer1)  # type: ignore
             logger.info(timer_response)
 
-            timer_response = timer_service_client.create_timer(timer2)
+            timer_response = timer_service_client.create_timer(timer2)  # type: ignore
             logger.info(timer_response)
 
         except Exception as e:
